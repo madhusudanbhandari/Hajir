@@ -22,3 +22,7 @@ exports.markAttendenceService=async({student,status})=>{
 
 
 };
+
+exports.getAttendenceByStudent=async(studentId)=>{
+    return await attendence.find({student:studentId}).sort({date:-1});
+};
