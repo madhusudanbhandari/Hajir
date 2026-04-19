@@ -1,4 +1,4 @@
-import '../services/api_services.dart';
+import '../services/api_service.dart';
 
 class AuthService {
   final ApiService api;
