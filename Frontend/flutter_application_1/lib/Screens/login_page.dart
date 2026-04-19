@@ -49,7 +49,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+              decoration: const InputDecoration(
+                labelText: "Email",
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                ),
+              ),
             ),
 
             const SizedBox(height: 10),
@@ -57,7 +65,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: const InputDecoration(labelText: "Password"),
+              decoration: const InputDecoration(
+                labelText: "Password",
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 2),
+                ),
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -75,12 +91,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     },
                     child: const Text("Login"),
                   ),
-
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text("Don't have an account? Register"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Don't have an account?"),
+                SizedBox(width: 3),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Register"),
+                ),
+              ],
             ),
           ],
         ),
