@@ -13,4 +13,18 @@ class AuthService {
 
     return data['token'];
   }
+
+  Future<void> register(
+    String name,
+    String email,
+    String password,
+    String role,
+  ) async {
+    await api.post("auth/register", {
+      "name": name,
+      "email": email,
+      "password": password,
+      "role": role,
+    });
+  }
 }

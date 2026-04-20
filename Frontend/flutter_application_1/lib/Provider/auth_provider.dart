@@ -29,4 +29,20 @@ class AuthNotifier extends StateNotifier<AsyncValue<void>> {
       state = AsyncValue.error(e, StackTrace.current);
     }
   }
+
+  Future<void> register(
+    String name,
+    String email,
+    String password,
+    String role,
+  ) async {
+    state = const AsyncValue.loading();
+
+    try {
+      await service.register(name, email, password, role);
+      state = const AsyncValue.data(null);
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+    }
+  }
 }
