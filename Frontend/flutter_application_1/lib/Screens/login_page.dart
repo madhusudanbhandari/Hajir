@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/register_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Provider/auth_provider.dart';
 import 'home_page.dart';
@@ -98,9 +99,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 SizedBox(width: 3),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => RegisterPage()),
+                    );
                   },
-                  child: const Text("Register"),
+                  child: Text("Register"),
                 ),
               ],
             ),

@@ -34,14 +34,28 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: "Name"),
+              decoration: const InputDecoration(
+                labelText: "Name",
+                enabledBorder: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                ),
+              ),
             ),
 
             const SizedBox(height: 10),
 
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+              decoration: const InputDecoration(
+                labelText: "Email",
+                enabledBorder: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                ),
+              ),
             ),
 
             const SizedBox(height: 10),
@@ -49,7 +63,14 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: const InputDecoration(labelText: "Password"),
+              decoration: const InputDecoration(
+                labelText: "Password",
+                enabledBorder: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                ),
+              ),
             ),
 
             const SizedBox(height: 10),
