@@ -11,6 +11,9 @@ class AuthService {
       "password": password,
     });
 
+    print("Login Response: $data");
+    print("Email,$email");
+    print("password: $password");
     return data['token'];
   }
 
@@ -20,7 +23,7 @@ class AuthService {
     String password,
     String role,
   ) async {
-    await api.post("auth/register", {
+    await api.post("/auth/register", {
       "name": name,
       "email": email,
       "password": password,

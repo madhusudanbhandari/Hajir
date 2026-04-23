@@ -83,6 +83,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () {
+                      print(
+                        "Email: ${emailController.text}, Password: ${passwordController.text}",
+                      );
                       ref
                           .read(authProvider.notifier)
                           .login(
