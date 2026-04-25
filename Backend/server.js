@@ -9,3 +9,6 @@ connectDB();
 app.listen(PORT,()=>{
     console.log(`server running on port ${PORT}`);
 });
+
+app.use('/api/calss',require('./routes/classRoutes'));
+app.use('/api/student',require('./routes/studentRoutes'));

@@ -1,13 +1,10 @@
 const express=require('express');
 const router=express.Router();
-
 const auth=require('../middleware/authMiddleware');
-const {allowRoles}=require('../middleware/roleMiddleware');
+const {createStudent ,linkParent}=require('../controllers/studentController');
 
-const{addStudent,getMyStudents}=require('../controllers/studentController');
 
-router.post('/add',auth, allowRoles('teacher','admin'),addStudent);
-
-router.get('/my',auth, allowRoles('parent'),getMyStudents);
+router.post('/create',auth,createStudent);
+router.put('link-parent',auth,linkParent);
 
 module.exports=router;

@@ -1,19 +1,44 @@
-const{createStudent, getStudentsByParent}=require('../services/studentService');
+const Student=require('../models/Student');
+const User=require('../models/user');
 
-exports.addStudent=async(req,res)=>{
+exports.createStudent=async(req , res)=>{
     try{
-        const student=await createStudent(req.body);
-        res.json(student);
+      const {name, classId}=req.body;
+
+     if (!name || !classId){
+        return res.status(400).json({msg:'All fields required'});
+
+     }
+     const student=new Student({
+        name,classId
+     });
+     await student.save();
+
+     res.json(student);
     }catch(err){
-        res.status(400).json({error:err.message});
-        };
+        res.status(500).json({error:err.message});
+    }
 };
 
-exports.getMyStudents=async(req,res)=>{
+exports.linkParent=async(req,res)=>{
     try{
-        const students=await getStudentsByParent(req.user.id);
-        res.json(students);
-    }catch(err){
-        res.status(500).json({error:err.message})
+        const {studentId, parentId}=req.body;
+
+        const parent=await User.findById(parentId);
+
+        if (!parent || parent.role !== "parent") {
+            return res.status(400).json({ msg: "Invalid parent" });
+         }
+         const updatedStudent=await Student.findByIdAndUpdate(
+            studentId,
+            {parentId},
+            {new:true}
+
+         );
+
+         res.json(updateStudent);
+        }catch(err){
+            res.status(500).json({error:err.message});
+        }
+
     }
-}
