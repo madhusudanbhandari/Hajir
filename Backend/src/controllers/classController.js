@@ -1,4 +1,6 @@
 const Class=require('../models/classModel');
+const User=require('../models/user');
+
 
 exports.createClass=async(req,res)=>{
  try{
@@ -15,3 +17,23 @@ exports.createClass=async(req,res)=>{
     res.status(500).json({error:err.message});
  }
 }
+
+exports.assignTeacher=async(req,res)=>{
+    try{
+        const {classId,teacherId}=req.body;
+
+        const teacher=await User.findById(teacherId);
+
+         if (!teacher || teacher.role !== "teacher") {
+            return res.status(400).json({ msg: "Invalid teacher" });
+        }
+        const updatedClass=await Class.findByIdAndUpdate(
+            classId,
+            {teacherId},
+            {new:true}
+        );
+        res.json(updatedClass);
+    }catch(err){
+        res.json(500).json({error:err.message});
+    }
+};
