@@ -14,3 +14,4 @@ app.use('/api/class', require('./src/routes/classRoutes'));
 app.use('/api/student', require('./src/routes/studentRoutes'));
 app.use('/api/attendence', require('./src/routes/attendenceRoutes'));
 app.use('/api/notifications',require('./src/routes/notificationRoutes'));
+app.use('/api/leave', require('./src/routes/leaveRoutes'));
