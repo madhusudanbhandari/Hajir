@@ -3,9 +3,13 @@ const mongoose=require('mongoose');
 const studentSchema=new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:true,
+        
     },
-    className:String,
+    classId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Class'
+    },
 
     parent:{
         type:mongoose.Schema.Types.ObjectId,
