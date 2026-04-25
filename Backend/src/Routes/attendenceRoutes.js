@@ -1,15 +1,22 @@
-const express=require('express');
-const router=express.Router();
+// routes/attendanceRoutes.js
+const express = require('express');
+const router = express.Router();
 
-const auth=require('../middleware/authMiddleware');
-const {allowRoles}=require('../middleware/roleMiddleware');
+const {
+  markAttendance,
+  getAttendanceByClass,
+  getAttendanceByStudent,
+  getMonthlyAttendance
+} = require('../controllers/attendanceController');
 
-const {markAttendence,getStudentAttendence,getDashboard}=require('../controllers/attendenceController');
+const auth = require('../middleware/auth');
 
-router.post('/mark',auth, allowRoles('teacher'),markAttendence);
+router.post('/mark', auth, markAttendance);
 
-router.get('/student/:id',auth,getStudentAttendence);
+router.get('/class', auth, getAttendanceByClass);
 
-router.get('dashboard',auth,allowRoles('parenet'),getDashboard)
+router.get('/student/:studentId', auth, getAttendanceByStudent);
 
-module.exports=router;
+router.get('/monthly', auth, getMonthlyAttendance);
+
+module.exports = router;

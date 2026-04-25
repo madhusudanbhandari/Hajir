@@ -12,3 +12,4 @@ app.listen(PORT,()=>{
 
 app.use('/api/calss',require('./routes/classRoutes'));
 app.use('/api/student',require('./routes/studentRoutes'));
+app.use('api/attendence',require('./routes/attendenceRoutes'));
