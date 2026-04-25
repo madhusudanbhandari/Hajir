@@ -1,22 +1,14 @@
-// routes/attendanceRoutes.js
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/authMiddleware');
+const { markAttendenceService, getAttendenceByClassService, getAttendenceByStudentService, getMonthlyAttendenceService } = require('../services/attendenceService');
 
-const {
-  markAttendance,
-  getAttendanceByClass,
-  getAttendanceByStudent,
-  getMonthlyAttendance
-} = require('../controllers/attendanceController');
+router.post('/mark', auth, markAttendenceService);
 
-const auth = require('../middleware/auth');
+router.get('/class', auth, getAttendenceByClassService);
 
-router.post('/mark', auth, markAttendance);
+router.get('/student/:studentId', auth, getAttendenceByStudentService);
 
-router.get('/class', auth, getAttendanceByClass);
-
-router.get('/student/:studentId', auth, getAttendanceByStudent);
-
-router.get('/monthly', auth, getMonthlyAttendance);
+router.get('/monthly', auth, getMonthlyAttendenceService);
 
 module.exports = router;

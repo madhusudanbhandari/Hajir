@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {createClass,assignTeacher}=require('../controller/classController');
+const {createClass,assignTeacher}=require('../controllers/classController');
 const auth=require('../middleware/authMiddleware');
 
 router.post('/create',auth,createClass);

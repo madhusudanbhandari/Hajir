@@ -10,6 +10,6 @@ app.listen(PORT,()=>{
     console.log(`server running on port ${PORT}`);
 });
 
-app.use('/api/calss',require('./routes/classRoutes'));
-app.use('/api/student',require('./routes/studentRoutes'));
-app.use('api/attendence',require('./routes/attendenceRoutes'));
+app.use('/api/class', require('./src/routes/classRoutes'));
+app.use('/api/student', require('./src/routes/studentRoutes'));
+app.use('/api/attendence', require('./src/routes/attendenceRoutes'));
