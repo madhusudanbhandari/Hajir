@@ -6,6 +6,16 @@ const attendenceSchema= new mongoose.Schema({
         ref:'Student',
         required:true
     },
+    classId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'class',
+        required:'true'
+    },
+    teacherId:{
+        type:mongoose.Types.ObjectId,
+        ref:'teacher',
+        required:'true'
+    },
     date:{
         type:Date,
         default:Date.now,
