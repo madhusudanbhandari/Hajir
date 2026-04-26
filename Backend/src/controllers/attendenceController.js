@@ -1,4 +1,7 @@
-const {markAttendenceService,getAttendenceByClassService,getAttendenceByStudentService,getMonthlyAttendenceService}=require('../services/attendenceService');
+const {markAttendenceService,
+    getAttendenceByClassService,
+    getAttendenceByStudentService,
+    getMonthlyAttendenceService}=require('../services/attendenceService');
 
 exports.markAttendenceService=async(req,res)=>{
     try{
@@ -18,7 +21,7 @@ exports.markAttendenceService=async(req,res)=>{
         res.status(500).json({error:err.message});
     }
     };
-    exports.getAttendenceByClass=async(req,res)=>{
+exports.getAttendenceByClass=async(req,res)=>{
         try{
             const {classId,date}=req.query;
 

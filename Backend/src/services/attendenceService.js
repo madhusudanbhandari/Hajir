@@ -1,6 +1,7 @@
 const attendence=require('../models/attendence');
 const Student=require('../models/student');
 const { sendNotification } = require('./notificationService');
+const Leave = require('../models/Leave');
 
 exports.markAttendenceService=async({classId, teacherId, date, attendence})=>{
     await attendence.deleteMany({classId,date});
@@ -8,7 +9,7 @@ exports.markAttendenceService=async({classId, teacherId, date, attendence})=>{
     const records=[];
 
     for (const item of attendence){
-            const record=await attendence.create({
+        const record=await attendence.create({
                 studentId:item.studentId,
                 classId,
                 teacherId,
@@ -23,7 +24,22 @@ exports.markAttendenceService=async({classId, teacherId, date, attendence})=>{
                 `Your child was marked ${item.status} today`
             );
         }
+
         records.push(record);
+
+        const leave=await Leave.findOne({
+            studentId:item.studentId,
+            status:'approved',
+            fromDate:{$lte:date},
+            toDate:{$gte:date}
+
+        });
+        let finalStatus=item.status;
+
+        if(leave){
+            finalStatus='leave';
+        }
+
     }
     return records;
 };

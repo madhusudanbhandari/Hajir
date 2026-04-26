@@ -11,9 +11,9 @@ const leaveSchema= new mongoose.Schema({
         ref:'User',
         required:'true'
     },
-    fromDate=String,
-    toDate=String,
-    reason=String,
+    fromDate:String,
+    toDate:String,
+    reason:String,
     status:{
         type:String,
         enum:['pending','approved','rejected'],
