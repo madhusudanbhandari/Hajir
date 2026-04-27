@@ -1,28 +1,62 @@
 const attendence=require('../models/attendence');
 const Student=require('../models/student');
 const { sendNotification } = require('./notificationService');
+const Leave = require('../models/Leave');
 
-exports.markAttendenceService=async({student,status})=>{
-    const record=await attendence.create({
-        student,
-        status
-    });
-    const studentData=await Student.findById(student).populate('parent');
+exports.markAttendenceService=async({classId, teacherId, date, attendence})=>{
+    await attendence.deleteMany({classId,date});
+    
+    const records=[];
 
-    if(!studentData) {
-        throw new Error("Student not found");
+    for (const item of attendence){
+        const record=await attendence.create({
+                studentId:item.studentId,
+                classId,
+                teacherId,
+                date,
+                status:item.status
+            });
+        const student=await Student.findById(item.studentId);
+
+          if (student?.parentId && (item.status === 'absent' || item.status === 'late')) {
+            await sendNotification(
+                student.parentId,
+                `Your child was marked ${item.status} today`
+            );
+        }
+
+        records.push(record);
+
+        const leave=await Leave.findOne({
+            studentId:item.studentId,
+            status:'approved',
+            fromDate:{$lte:date},
+            toDate:{$gte:date}
+
+        });
+        let finalStatus=item.status;
+
+        if(leave){
+            finalStatus='leave';
+        }
+
     }
-
-    const parentId=studentData.parent?._id;
-
-    if(parentId){
-        await sendNotification(parentId, `Your child is ${status} today`);
-    }
-    return record;
-
-
+    return records;
 };
 
-exports.getAttendenceByStudent=async(studentId)=>{
-    return await attendence.find({student:studentId}).sort({date:-1});
+exports.getAttendenceByClassService=async(classId, date)=>{
+    return await attendence.find({classId, date})
+    .populate('studentId','name');
 };
+
+exports.getAttendenceByStudentService=async(StudentId)=>{
+    return await attendence.find({studentId})
+    .sort({date:-1});
+};
+
+exports.getMonthlyAttendenceService=async(studentId,month)=>{
+    return await attendence.find({
+        studentId,
+        date:{$regex:`${month}`}
+    })
+}

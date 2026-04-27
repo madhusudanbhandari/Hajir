@@ -6,9 +6,19 @@ const attendenceSchema= new mongoose.Schema({
         ref:'Student',
         required:true
     },
+    classId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Class',
+        required:'true'
+    },
+    teacherId:{
+        type:mongoose.Types.ObjectId,
+        ref:'User',
+        required:'true'
+    },
     date:{
-        type:Date,
-        default:Date.now,
+        type:String,
+        required:true
     },
     status:{
         type:String,
@@ -19,4 +29,5 @@ const attendenceSchema= new mongoose.Schema({
 
 },{timestamp:true});
 
-module.exports=mongoose.model('Attendence',attendenceSchema)
+attendenceSchema.index({studentId:1, date:1},{unique:true});
+module.exports=mongoose.model('Attendence',attendenceSchema);

@@ -2,7 +2,7 @@ const User=require('../models/user');
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken')
 
-exports.registerUser=async({name,email,password,role})=>{
+exports.registerUser=async({name,email,password,role,schoolId})=>{
     const existingUser=await User.findOne({email});
     if (existingUser){
         throw new Error('User already exist');
@@ -15,7 +15,8 @@ exports.registerUser=async({name,email,password,role})=>{
         name,
         email,
         password:hashedPasseord,
-        role
+        role,
+        schoolId
 
     });
     return user;
@@ -25,7 +26,7 @@ exports.loginUser=async({email,password})=>{
     const user=await User.findOne({email});
     if(!user) throw new Error("User not found");
 
-    const isMatch=await bcrypt.compare(password, user.passsword);
+    const isMatch=await bcrypt.compare(password, user.password);
     if(!isMatch) throw new Error("Invalid credentials");
 
     if (!email || !password) {
