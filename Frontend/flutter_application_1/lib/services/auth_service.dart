@@ -1,13 +1,13 @@
-import '../services/api_service.dart';
+import 'api_service.dart';
 
 class AuthService {
   final api = ApiService();
 
   Future login(String email, String password) async {
-    return await api.post("/auth/login", {
+    return await api.post("auth/login", {
       "email": email,
       "password": password,
-    });
+    }, null);
   }
 
   Future register(
@@ -16,11 +16,11 @@ class AuthService {
     String password,
     String role,
   ) async {
-    await api.post("/auth/register", {
+    return await api.post("auth/register", {
       "name": name,
       "email": email,
       "password": password,
       "role": role,
-    });
+    }, null);
   }
 }

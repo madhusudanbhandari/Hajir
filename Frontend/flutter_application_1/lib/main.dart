@@ -1,26 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/home_page.dart';
-import 'package:flutter_application_1/Screens/login_page.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_application_1/Screens/admin_dashboard.dart';
+import 'package:flutter_application_1/Screens/student_dashboard.dart';
+import 'package:flutter_application_1/Screens/teacher_dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/login_screen.dart';
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("token");
+  }
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
+  Future<String?> getRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("role");
+  }
 
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Hajir",
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: FutureBuilder(
+        future: Future.wait([getToken(), getRole()]),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+
+          final token = snapshot.data[0];
+          final role = snapshot.data[1];
+
+          if (token == null) return LoginPage();
+
+          if (role == "student") return StudentDashboard();
+          if (role == "teacher") return TeacherDashboard();
+          return AdminDashboard();
+        },
+      ),
     );
   }
 }

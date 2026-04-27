@@ -8,7 +8,7 @@ final authProvider = StateNotifierProvider<AuthNotifier, AsyncValue<void>>((
   ref,
 ) {
   final api = ref.read(apiProvider);
-  return AuthNotifier(AuthService(api));
+  return AuthNotifier(AuthService());
 });
 
 class AuthNotifier extends StateNotifier<AsyncValue<void>> {

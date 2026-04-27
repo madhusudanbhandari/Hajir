@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   final String baseUrl = "http://localhost:5000/api";
 
-  Future<dynamic> get(String endpoint, token) async {
+  Future<dynamic> get(String endpoint, String token) async {
     final response = await http.get(
       Uri.parse("$baseUrl$endpoint"),
       headers: {
@@ -16,11 +16,7 @@ class ApiService {
     return _handleResponse(response);
   }
 
-  Future<dynamic> post(
-    String endpoint,
-    Map<String, dynamic> data,
-    String token,
-  ) async {
+  Future<dynamic> post(String endpoint, Map data, String? token) async {
     final response = await http.post(
       Uri.parse("$baseUrl$endpoint"),
       headers: {"Content-Type": "application/json"},

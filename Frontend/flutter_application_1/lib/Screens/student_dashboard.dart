@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/attendance_service.dart';
-import 'login_screen.dart';
 
 class StudentDashboard extends StatelessWidget {
   final service = AttendanceService();
