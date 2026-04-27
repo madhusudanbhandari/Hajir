@@ -1,23 +1,16 @@
 import '../services/api_service.dart';
 
 class AuthService {
-  final ApiService api;
+  final api = ApiService();
 
-  AuthService(this.api);
-
-  Future<String> login(String email, String password) async {
-    final data = await api.post("/auth/login", {
+  Future login(String email, String password) async {
+    return await api.post("/auth/login", {
       "email": email,
       "password": password,
     });
-
-    print("Login Response: $data");
-    print("Email,$email");
-    print("password: $password");
-    return data['token'];
   }
 
-  Future<void> register(
+  Future register(
     String name,
     String email,
     String password,

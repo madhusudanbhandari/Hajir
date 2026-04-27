@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Provider/dashboard_provider.dart';
-import 'package:flutter_application_1/Screens/login_page.dart';
+import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/utils/token_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,7 +23,7 @@ class HomePage extends ConsumerWidget {
 
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (_) => const LoginPage()),
+                MaterialPageRoute(builder: (_) => LoginScreen()),
               );
             },
           ),
