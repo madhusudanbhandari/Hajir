@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/admin_dashboard.dart';
 import 'package:flutter_application_1/Screens/register_screen.dart';
 import 'package:flutter_application_1/Screens/student_dashboard.dart';
 import 'package:flutter_application_1/Screens/teacher_dashboard.dart';
+import 'package:flutter_application_1/custom_widget/button.dart';
+import 'package:flutter_application_1/custom_widget/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/auth_service.dart';
 
@@ -46,47 +50,20 @@ class LoginScreen extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: email,
-              decoration: InputDecoration(
-                hintText: "Email",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2),
-                  borderRadius: BorderRadius.circular(3),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                ),
-              ),
-            ),
+            CustomTextField(hint: 'Email', controller: email),
             SizedBox(height: 5),
-            TextField(
-              controller: password,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: "Password",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-              ),
-            ),
+            CustomTextField(hint: 'Password', controller: password),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => login(context),
-              child: Text("Login"),
-            ),
-            TextButton(
+            CustomButton(onPressed: () => login(context), text: 'Login'),
+            SizedBox(height: 5),
+            CustomButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => RegisterScreen()),
                 );
               },
-              child: Text("Register"),
+              text: 'Register',
             ),
           ],
         ),

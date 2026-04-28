@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/custom_widget/button.dart';
+import 'package:flutter_application_1/custom_widget/text_field.dart';
 import '../services/auth_service.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -19,31 +21,51 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Register")),
       body: Column(
         children: [
-          TextField(
-            controller: name,
-            decoration: InputDecoration(hintText: "Name"),
+          CustomTextField(hint: 'Name', controller: name),
+          SizedBox(height: 5),
+          CustomTextField(hint: 'Email', controller: email),
+          SizedBox(height: 10),
+          CustomTextField(hint: 'Password', controller: password),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text("Select Role"),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        title: Text("Student"),
+                        onTap: () {
+                          role.text = "student";
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Teacher"),
+                        onTap: () {
+                          role.text = "teacher";
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Admin"),
+                        onTap: () {
+                          role.text = "admin";
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+            child: Text('Select Role'),
           ),
           SizedBox(height: 5),
-          TextField(
-            controller: email,
-            decoration: InputDecoration(hintText: "Email"),
-          ),
-          SizedBox(height: 10),
-          TextField(
-            controller: password,
-            decoration: InputDecoration(hintText: "Password"),
-          ),
-          SizedBox(height: 10),
-          TextField(
-            controller: role,
-            decoration: InputDecoration(
-              hintText: "Role (student/teacher/admin)",
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () => register(context),
-            child: Text("Register"),
-          ),
+          CustomButton(onPressed: () => register(context), text: 'Register'),
         ],
       ),
     );
