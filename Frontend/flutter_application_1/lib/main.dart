@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: Future.wait([getToken(), getRole()]),
         builder: (context, AsyncSnapshot snapshot) {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           final token = snapshot.data[0];
           final role = snapshot.data[1];
 
-          if (token == null) return LoginPage();
+          if (token == null) return LoginScreen();
 
           if (role == "student") return StudentDashboard();
           if (role == "teacher") return TeacherDashboard();

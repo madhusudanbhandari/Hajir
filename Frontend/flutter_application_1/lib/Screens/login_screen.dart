@@ -48,12 +48,31 @@ class LoginScreen extends StatelessWidget {
           children: [
             TextField(
               controller: email,
-              decoration: InputDecoration(hintText: "Email"),
+              decoration: InputDecoration(
+                hintText: "Email",
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2),
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                ),
+              ),
             ),
+            SizedBox(height: 5),
             TextField(
               controller: password,
               obscureText: true,
-              decoration: InputDecoration(hintText: "Password"),
+              decoration: InputDecoration(
+                hintText: "Password",
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -64,7 +83,7 @@ class LoginScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => RegisterPage()),
+                  MaterialPageRoute(builder: (_) => RegisterScreen()),
                 );
               },
               child: Text("Register"),

@@ -1,114 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../provider/auth_provider.dart';
+import '../services/auth_service.dart';
 
-class RegisterPage extends ConsumerStatefulWidget {
-  const RegisterPage({super.key});
+class RegisterScreen extends StatelessWidget {
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final role = TextEditingController();
+  final auth = AuthService();
 
-  @override
-  ConsumerState<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends ConsumerState<RegisterPage> {
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  String role = "student";
+  void register(BuildContext context) async {
+    await auth.register(name.text, email.text, password.text, role.text);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authProvider);
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Register")),
-
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Create Account", style: TextStyle(fontSize: 28)),
-
-            const SizedBox(height: 20),
-
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(
-                labelText: "Name",
-                enabledBorder: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2),
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                ),
-              ),
+      appBar: AppBar(title: Text("Register")),
+      body: Column(
+        children: [
+          TextField(
+            controller: name,
+            decoration: InputDecoration(hintText: "Name"),
+          ),
+          SizedBox(height: 5),
+          TextField(
+            controller: email,
+            decoration: InputDecoration(hintText: "Email"),
+          ),
+          SizedBox(height: 10),
+          TextField(
+            controller: password,
+            decoration: InputDecoration(hintText: "Password"),
+          ),
+          SizedBox(height: 10),
+          TextField(
+            controller: role,
+            decoration: InputDecoration(
+              hintText: "Role (student/teacher/admin)",
             ),
-
-            const SizedBox(height: 10),
-
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: "Email",
-                enabledBorder: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2),
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: "Password",
-                enabledBorder: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2),
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            DropdownButton<String>(
-              value: role,
-              items: const [
-                DropdownMenuItem(value: "student", child: Text("Student")),
-                DropdownMenuItem(value: "parent", child: Text("Parent")),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  role = value!;
-                });
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            authState.isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: () async {
-                      await ref
-                          .read(authProvider.notifier)
-                          .register(
-                            nameController.text,
-                            emailController.text,
-                            passwordController.text,
-                            role,
-                          );
-
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Register"),
-                  ),
-          ],
-        ),
+          ),
+          ElevatedButton(
+            onPressed: () => register(context),
+            child: Text("Register"),
+          ),
+        ],
       ),
     );
   }
