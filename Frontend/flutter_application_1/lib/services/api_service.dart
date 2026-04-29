@@ -6,7 +6,7 @@ class ApiService {
 
   Future<dynamic> get(String endpoint, String token) async {
     final response = await http.get(
-      Uri.parse("$baseUrl$endpoint"),
+      Uri.parse("$baseUrl/$endpoint"),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token",
@@ -18,7 +18,7 @@ class ApiService {
 
   Future<dynamic> post(String endpoint, Map data, String? token) async {
     final response = await http.post(
-      Uri.parse("$baseUrl$endpoint"),
+      Uri.parse("$baseUrl/$endpoint"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(data),
     );
